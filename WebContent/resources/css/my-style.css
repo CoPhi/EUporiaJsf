@@ -1,0 +1,21 @@
+.ui-widget,
+.ui-widget .ui-widget {
+    font-size: 12px !important;
+}
+
+.center{
+	align:center;
+}
+
+.normal{
+	text-align:inherit;
+}
+
+.arabic{
+	direction:rtl;
+	text-align:right;
+}
+
+.ui-datatable .ui-datatable-data td {
+    vertical-align : top;
+}

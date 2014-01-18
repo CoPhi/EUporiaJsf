@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<title>Greek into Arabic (GA)</title>
+	</h:head>
+	
+	<h:body>
+	<div align="center">	
+		
+	<h:form>
+
+        
+         <p:panel header="Greek Into Arabic Web App" footer="Go...."> 
+			 <p:commandButton ajax="false" type="submit" action="controlPanel.xhtml" image="ui-icon ui-icon-circle-triangle-w">
+			 </p:commandButton>
+
+     <!-- h3>Theme chooser</h3 -->  
+    <!-- p:menu type="tiered" style="width:180px" -->
+    <p:commandButton id="dynaButton" value="Choose theme" type="button"/>  
+    <p:menu position="dynamic" trigger="dynaButton" my="left top" at="left bottom">    
+           <p:submenu label="Themes">
+            <p:menuitem value="Black-Tie" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="black-tie"/>
+            </p:menuitem>
+            <p:menuitem value="Blue Sky" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="bluesky"/>
+            </p:menuitem>
+            <p:menuitem value="Casablanca" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="casablanca"/>
+            </p:menuitem>
+            <p:menuitem value="Cupertino" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="cupertino"/>
+            </p:menuitem>
+            <p:menuitem value="Sam" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="sam"/>
+            </p:menuitem>
+            <p:menuitem value="Hot Snakes" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="hot-sneaks"/>
+            </p:menuitem>
+            <p:menuitem value="Vader" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="vader"/>
+            </p:menuitem>
+            <p:menuitem value="Dark Hive" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="dark-hive"/>
+            </p:menuitem>
+            <p:menuitem value="Start" ajax="false" action="#{themeSwitcher.setTheme}" style="font-size: smaller !important;">
+                 <f:param name="theme" value="start"/>
+            </p:menuitem>
+        </p:submenu>
+ </p:menu>  
+        </p:panel>
+	</h:form>
+
+                    
+	
+	</div>
+	</h:body>
+	
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<h:outputStylesheet library="css" name="my-style.css"  />
+		<title>Aporia Control Panel</title>
+	</h:head>
+	
+<h:body>	
+		
+    <p:layout fullPage="true">
+    <p:layoutUnit position="north" size="110" header="Aporia Application v.#{msg['version']}" resizable="false" closable="false" collapsible="false" >
+        <!-- <p:graphicImage value="#{resource['images/manoscritto-ara.jpg']}" /> -->
+         <h:form>  
+			<p:menubar >  
+		        <p:menuitem value="Home" url="controlPanel.xhtml" target="" />  
+		    
+		        <p:menuitem value="Search" url="controlPanelSearch.xhtml" target="" disabled="true"/>  
+		        
+		        <p:menuitem value="View parallel Texts" url="controlPanelViewGreek.xhtml"  styleClass="ui-state-active" target="" />
+		        
+		        <p:menuitem value="Manage pericopes" url="."  disabled="true" />  
+		    
+		        <p:menuitem value="Manage witnesses" url="." disabled="true"  />  
+
+				<p:menuitem value="Comment" url="." styleClass="ui-state-active" target="" />
+		        
+		        <p:menuitem value="Linguistic Analysis" url="controlPanelAnalysis.xhtml"  target="" disabled="true" />  
+		    </p:menubar> 		
+		 </h:form>  
+    </p:layoutUnit>
+
+    <p:layoutUnit position="south" size="75" header="Εἰ δὴ ταῦτα ὀρθῶς λέγεται, λύοιντο ἂν ἤδη αἱ ἀπορίαι" resizable="false" closable="false" collapsible="false">
+        <!-- <h:outputText value="Copyright &copy; - ILC-CNR" />  -->
+        <h:graphicImage height="15px" value="#{resource['images/cc-by-sa_h30.png']}" />
+        <h:graphicImage height="15px" value="#{resource['images/gpl-logo_h20.png']}" />
+        <h:outputText style="font-size:14px; font-style:italic" value="ILC-CNR 2012" />
+    </p:layoutUnit>
+
+ 	<p:layoutUnit position="west">
+		 
+			
+    		 
+    		<p:separator style="width:105px" id="separatorComment"></p:separator>
+    		
+    		<!-- PROVATE CON PARAM e EXTERNAL CONTEXT IL LINK-->
+    		
+    		 
+    			<h:form id="commentsform">	
+    				
+
+				<p:dataList value="#{commentBean.pericopeComments}" var="comment"
+					paginator="true" rows="5" effectSpeed="fast"
+					paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					itemType="none">
+
+					<f:facet name="header">
+           			 Comments
+        			</f:facet>
+
+					<p:column>
+						<p:commandLink ajax="false" action="#{commentBean.viewSelectedComment}" title="View Comment">
+							<p:graphicImage value="#{resource['images/search.png']}" />
+							<f:setPropertyActionListener value="#{comment}"
+								target="#{commentBean.selectedComment}" />
+						</p:commandLink>
+
+						<h:outputText value="[#{comment.type}]: #{comment.snippet}"
+							style="margin-left:3px" />
+
+					</p:column>
+				</p:dataList>
+				<p:separator></p:separator>
+			</h:form>  	
+    		
+    		
+		</p:layoutUnit>
+ 	
+    <p:layoutUnit style="text-align:center;" styleClass="center" position="center" id="centerUnit" >
+        
+            
+				<!-- <ui:include src="templates/navigations.xhtml" />  -->
+				<!-- <ui:include src="templates/_comment.xhtml" /> -->
+				
+				
+			<h:form id ="form">
+				<h:outputScript name="test.js" library="javascript"></h:outputScript>
+				<div align="center">
+				<h:panelGrid columns="2">
+					<h:inputTextarea cols="50" id="greektextarea" value="#{commentBean.greektextarea}" onblur="greekselection();return false;"></h:inputTextarea>
+					<h:inputTextarea cols="50" id="arabictextarea" value="#{commentBean.arabictextarea}" onblur="arabicselection();return false;" style="direction:ltr; text-align:left"></h:inputTextarea>
+					<!-- <h:panelGroup><hr /></h:panelGroup><h:panelGroup><hr /></h:panelGroup> -->
+					<h:inputHidden id="greektext" value="#{commentBean.greektext}"></h:inputHidden>
+					<h:inputHidden id="arabictext" value="#{commentBean.arabictext}" style="direction:ltr; text-align:left"></h:inputHidden>
+					<!-- <h:panelGroup><hr /></h:panelGroup><h:panelGroup><hr /></h:panelGroup>  -->
+					<h:outputText escape="false" id="greekselectedText" value="#{commentBean.greekselectedText}"></h:outputText>
+					<h:outputText escape="false" id="arabicselectedText" value="#{commentBean.arabicselectedText}"></h:outputText>
+					<h:panelGroup><hr /></h:panelGroup><h:panelGroup><hr /></h:panelGroup>
+					<h:commandButton value="greek selection" action="#{commentBean.greekclick}" disabled = "#{not empty commentBean.selectedComment}"></h:commandButton>
+					<h:commandButton value="arabic selection" action="#{commentBean.arabicclick}" disabled = "#{not empty commentBean.selectedComment}"></h:commandButton>
+					
+					
+				</h:panelGrid>
+				
+				 
+					<h:panelGrid>
+						
+					</h:panelGrid>	
+				 
+				
+				</div>
+			</h:form>
+
+				<p:separator id ="separator" style="width:350px;height:15px"></p:separator>
+				
+				<div align="center">
+				<h:form>
+				<p:editor id="editor" value="#{commentBean.commentvalue}" width="600"/>
+				
+				<h:panelGrid columns="6" style="margin-top:10px">
+        			<h:commandButton id="newButton" value="new" action="#{commentBean.newComment}" />
+        			<h:commandButton id="deleteButton" value="delete" action ="#{commentBean.deleteComment}" onclick="return confirm('Are you sure?')" disabled = "#{empty commentBean.selectedComment}" />
+        			<p:selectOneMenu value="#{commentBean.commenttype}">
+            			<!--  
+            			<f:selectItem itemLabel="literal translation" itemValue="2" />
+            			<f:selectItem itemLabel="variant reading" itemValue="1" />
+            			<f:selectItem itemLabel="misunderstanding" itemValue="3" />
+            			-->
+            			<f:selectItem itemLabel="literal translation" itemValue="LT" />
+            			<f:selectItem itemLabel="free rendering" itemValue="FR" />
+            			<f:selectItem itemLabel="amplification" itemValue="Am" />
+            			<f:selectItem itemLabel="misunderstanding" itemValue="Ms" />
+            			<f:selectItem itemLabel="interpolation" itemValue="Ip" />
+            			<f:selectItem itemLabel="glossary" itemValue="Gs" />
+            			<f:selectItem itemLabel="additional note" itemValue="AN" />
+        			</p:selectOneMenu>
+        			<h:commandButton id="submitButton" value="submit" action="#{commentBean.submit}" />
+        			<h:commandButton id="clearButton" value="clear" action ="#{commentBean.clearCommentValue}" />
+    			</h:panelGrid>
+    			<!-- 
+    			<p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+        			<h:outputText id="display" value="#{commentBean.value}" escape="false" />
+    			</p:dialog>
+    			 -->
+    			</h:form>
+    			</div>
+    			
+				 
+				
+			
+        
+		<!--<h:outputText value="centro" />-->
+    </p:layoutUnit>
+
+	</p:layout>
+
+</h:body>
+	
+</html>

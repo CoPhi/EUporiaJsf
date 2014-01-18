@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:p="http://primefaces.org/ui">
+
+
+	<h:panelGrid columnClasses="normal,arabic" columns="2" cellspacing="10px">
+		
+		<h:outputText style="font-weight:bold" value="Testo Greco" />
+		<h:outputText style="font-weight:bold" value="Testo Arabo" />
+		<h:outputText value="#{tableBean.greekText}" />
+		<h:outputText style="direction:rtl; text-align:right" value="#{tableBean.arabicText}" />
+
+	</h:panelGrid>
+	<p:separator style="width:500px;height:15px" />
+	<h:outputText style="font-weight:bold" value="#{tableBean.selectedMacro}" /> Macro-Pericope selezionata
+</ui:composition>
+<!--<h:outputText value="#{tableBean.greekText}" />-->
+<!--<h:outputText style="direction:rtl" value="#{tableBean.selectedMacro}" />-->

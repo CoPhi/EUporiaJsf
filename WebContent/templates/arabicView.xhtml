@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- <h:form prependId="false">  -->
+
+		<p:dataTable id="dataTable" var="pericope" value="#{parallelViewBean.pericopesByArabic}"
+			paginator="true" rows="10"
+            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="10,20,50,500">
+			
+			<!-- 
+			<f:facet name="header">
+            	<h:commandLink action="greekView.xhtml" value="Order by Greek"></h:commandLink>
+        	</f:facet>
+ 			-->
+			<p:column>
+				<f:facet name="header">
+                	Greek 
+           		</f:facet>
+
+				<h:outputText value="#{pericope.greekText.reference}" />
+
+				<f:facet name="footer">
+                Reference
+            </f:facet>
+			</p:column>
+ 
+			<p:column headerText="Greek Pericope">
+				<h:outputText escape="false" value="#{pericope.greekText.content}" />
+			</p:column>
+
+			<p:column headerText="Arabic Pericope" style="direction:ltr; text-align:left">
+				<h:outputText escape="false" value="#{pericope.arabicText.content}" />
+			</p:column>
+
+			<p:column headerText="Arabic" footerText="Reference">
+				<h:outputText value="#{pericope.arabicText.reference}" />
+			</p:column>
+			
+			<p:column style="width:40px">
+					<h:panelGrid columns="1" styleClass="nestedUnit" cellpadding="2">
+                 	<p:commandButton id="selectButton" icon="ui-icon ui-icon-circle-arrow-w" title="select">
+                     	<f:setPropertyActionListener value="#{pericope}" target="#{commentBean.selectedPericope}" />
+                 	</p:commandButton>
+             		</h:panelGrid>
+			</p:column>
+			
+			<f:facet name="footer">
+            	<!-- <h:commandLink value="view linguistic analysis" action="analysis.xhtml" /> -->
+        	</f:facet>
+
+		</p:dataTable>
+
+	<!-- </h:form>  -->
+</ui:composition>

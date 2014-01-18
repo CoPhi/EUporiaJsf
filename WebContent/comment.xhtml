@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>TEST UI à component</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</h:head>
+	
+	<h:body>
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" size="80">
+				<div align="center"><h2><h:outputText value="Insert your Comment"></h:outputText> </h2></div>
+			</p:layoutUnit>
+			<p:layoutUnit position="west">
+				<p:menu>
+        			<p:submenu label="Ajax Menuitems">
+            			<p:menuitem value="Save"  url="#" icon="ui-icon-disk"/>
+            			<p:menuitem value="Update" url="#" icon="ui-icon-arrowrefresh-1-w"/>
+        			</p:submenu>
+        			<p:submenu label="Non-Ajax Menuitem">
+            			<p:menuitem value="Delete" url="#" ajax="false" icon="ui-icon-close"/>
+        			</p:submenu>
+        			<p:submenu label="Navigations">
+            			<p:menuitem value="Home" url="#" icon="ui-icon-home"/>
+            		<p:menuitem value="TouchFaces" url="#" icon="ui-icon-star"/>
+        			</p:submenu>
+    			</p:menu>
+			</p:layoutUnit>
+			<p:layoutUnit position="center">
+			<h:form id="form" enctype="">
+				<h:outputScript name="test.js" library="javascript"></h:outputScript>
+				<div align="center">
+				<h:panelGrid columns="2">
+					<h:inputTextarea id="greektextarea" value="#{textBean.greektextarea}" onblur="greekselection();return false"></h:inputTextarea>
+					<h:inputTextarea id="arabictextarea" value="#{textBean.arabictextarea}" onblur="arabicselection();return false" style="direction:rtl; text-align:right"></h:inputTextarea>
+					<h:panelGroup><hr /></h:panelGroup><h:panelGroup><hr /></h:panelGroup>
+					<h:outputText id="greektext" value="#{textBean.greektext}"></h:outputText>
+					<h:outputText id="arabictext" value="#{textBean.arabictext}" style="direction:rtl; text-align:right"></h:outputText>
+					<h:panelGroup><hr /></h:panelGroup><h:panelGroup><hr /></h:panelGroup>
+					<h:outputText id="greekselectedText" value="#{textBean.greekselectedText}"></h:outputText>
+					<h:outputText id="arabicselectedText" value="#{textBean.arabicselectedText}"></h:outputText>
+					<h:panelGroup><hr /></h:panelGroup><h:panelGroup><hr /></h:panelGroup>
+					<h:commandButton value="greek selection" action="#{textBean.greekclick}" ></h:commandButton>
+					<h:commandButton value="arabic selection" action="#{textBean.arabicclick}" ></h:commandButton>
+				</h:panelGrid>
+				</div>
+			</h:form>
+
+				<p:separator id ="separator" style="width:350px;height:15px"></p:separator>
+				
+				<div align="center">
+				<h:form>
+				<p:editor id="editor" value="#{textBean.commentvalue}" width="600"/>
+				
+				<h:panelGrid columns="3" style="margin-top:10px">
+        			<p:selectOneMenu value="#{textBean.commenttype}">
+            			<f:selectItem itemLabel="Comment Type" itemValue="" />
+            			<f:selectItem itemLabel="variant reading" itemValue="1" />
+            			<f:selectItem itemLabel="note" itemValue="2" />
+            			<f:selectItem itemLabel="misunderstanding" itemValue="3" />
+        			</p:selectOneMenu>
+        			<p:commandButton id="submitButton" value="Submit" update="display" oncomplete="dlg.show()" icon="ui-icon-disk" />
+        			<p:commandButton id="clearButton" type="button" value="Clear" onclick="editor.clear()" icon="ui-icon-close" />
+    			</h:panelGrid>
+    			<p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+        			<h:outputText id="display" value="#{textBean.value}" escape="false" />
+    			</p:dialog>
+    			</h:form>
+    			</div>
+    			
+			
+			</p:layoutUnit>
+		</p:layout>
+ 
+	</h:body>
+</html>

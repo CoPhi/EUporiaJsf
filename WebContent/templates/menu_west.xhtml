@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:p="http://primefaces.org/ui">
+
+    <p:menu>
+		<p:submenu label="Items 1">
+			<p:menuitem value="Save" ajax="false" icon="ui-icon-disk"/>
+			<p:menuitem value="Update" ajax="false" icon="ui-icon-arrowrefresh-1-w"/>
+		</p:submenu>
+		<p:submenu label="Item 2">
+			<p:menuitem value="Delete" ajax="false" icon="ui-icon-close"/>
+		</p:submenu>
+			<p:submenu label="Navigations">
+			<p:menuitem value="Home" url="http://www.greekintoarabic.eu" icon="ui-icon-home"/>
+			<p:menuitem value="TouchFaces" url="http://www.ilc.cnr.it" icon="ui-icon-star"/>
+		</p:submenu>
+	</p:menu>
+    
+</ui:composition>

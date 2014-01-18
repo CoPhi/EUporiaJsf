@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<body>
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:p="http://primefaces.org/ui">
+
+		<h:form id="menuForm">
+			<h:outputScript name="cophi.js" library="js"></h:outputScript>
+			<p:menubar styleClass="no-overflow">
+				<p:menuitem value="Home" url="Home.xhtml" target=""
+					styleClass="#{selected eq 'home' ? 'ui-state-active':'ui-state-inactive'}" />
+
+				<!-- p:menuitem value="View parallel pericopes"
+					url="ViewByArabic.xhtml" target="" 
+					styleClass="#{selected eq 'orderbyarabic' or enabled eq 'orderbygreek'? 'ui-state-active':'ui-state-inactive'}"/-->
+
+				<p:menuitem value="Pericopes by Greek" url="ViewByGreek.xhtml"
+					target="" disabled="#{loginBean.loggedIn?false:true}"
+					styleClass="#{selected eq 'orderbygreek' ? 'ui-state-active' : 'ui-state-inactive'}" />
+
+				<p:menuitem value="Pericopes by Arabic" ajax="true"
+					disabled="#{loginBean.loggedIn?false:true}"
+					update="parallelViewFormId"
+					styleClass="#{selected eq 'orderbyarabic' ? 'ui-state-active' : 'ui-state-inactive'}"
+					url="ViewByArabic.xhtml" target="" />
+
+				<p:menuitem value="Search" url="Search.xhtml" target=""
+					disabled="true"
+					styleClass="#{selected eq 'search'? 'ui-state-active':'ui-state-inactive'}" />
+
+				<p:menuitem value="Pericopes Manager" url="ManagePericopes.xhtml"
+					styleClass="#{selected eq 'managepericopes'? 'ui-state-active':'ui-state-inactive'}"
+					disabled="#{commentViewBean.selectedViewLink eq null?true:''}" />
+
+				<p:menuitem value="Comments Editor" url="Comment.xhtml"
+					styleClass="#{selected eq 'comment'? 'ui-state-active':'ui-state-inactive'}"
+					disabled="#{commentViewBean.selectedViewLink eq null?true:''}" />
+
+				<p:menuitem value="Linguistic Analysis"
+					styleClass="#{selected eq 'analysis'? 'ui-state-active':'ui-state-inactive'}"
+					url="Analysis.xhtml" target="" disabled="true" />
+
+				<p:menuitem value="Witnesses Manager" url="." disabled="true" />
+
+				<f:facet name="options">
+					<p:commandButton type="submit" value="Admin"
+						rendered="#{loginBean.role=='admin'?'true':'false'}"
+						disabled="#{loginBean.loggedIn?'false':'true'}" onclick=""
+						icon="ui-icon-person" />
+					<h:outputText value="Logged in as "
+						rendered="#{loginBean.loggedIn?'true':'false'}" />
+					<h:outputText value="#{loginBean.username}" styleClass="login-font"
+						rendered="#{loginBean.loggedIn?'true':'false'}" />
+					<p:commandButton type="submit" value="Logout"
+						rendered="#{loginBean.loggedIn?'true':'false'}"
+						disabled="#{loginBean.loggedIn?'false':'true'}"
+						action="#{loginBean.doLogout}" icon="ui-icon-circle-close" />
+				</f:facet>
+			</p:menubar>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

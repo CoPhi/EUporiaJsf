@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<body>
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:c="http://java.sun.com/jsp/jstl/core"
+		xmlns:p="http://primefaces.org/ui">
+
+		<link rel="stylesheet" type="text/css" href="jquery.cleditor.css" />
+		<script type="text/javascript" src="js/base64v1_0.js" />
+		<script type="text/javascript" src="js/jquery.ilc.editor.js" />
+		<script type="text/javascript" src="js/resource.js" />
+
+		<!-- h:form id="pericopesTextForm" -->
+		<h:outputScript name="selection.js" library="js"></h:outputScript>
+		<div align="center">
+			<h:panelGrid columnClasses="greekpanel,arabicpanel" columns="2">
+				<h:outputText
+					value="#{pericopeEditorController.selectedViewLink.greekPericopeInfo}"></h:outputText>
+				<h:outputText
+					value="#{pericopeEditorController.selectedViewLink.arabicPericopeInfo}"></h:outputText>
+				<!-- pericopatore greco -->
+				<h:form id="greekPericopesTextForm">
+					<p:outputPanel>
+						<p:scrollPanel mode="native" style="height:400px">
+							<h:panelGroup layout="block" style="text-align:left">
+								<p:outputPanel styleClass="greek" id="greekPanel">
+									<ui:repeat var="w" varStatus="status" id="greekLoop"
+										value="#{pericopeEditorController.greekTokenViewList}">
+
+										<p:commandLink value="#{w.text}" id="clg"
+											title="#{status.index} Pericope #{w.pericopeInfo}:#{w.from}-#{w.to}"
+											partialSubmit="true" process="@this" 
+											update="greekLoop:clg :greekButtons"
+											actionListener="#{pericopeEditorController.clickOnToken}"
+											styleClass="link_nodecor bk_#{pericopeEditorController.isGreekTokenViewToList(w)?'7':w.color eq -1?9:w.pericopeId eq pericopeEditorController.selectedGreekPericopeId?'grfocused':w.color%4} greek">
+
+											<f:setPropertyActionListener
+												target="#{pericopeEditorController.greekTokenViewToList}"
+												value="#{w}" />
+											<p:focus />
+										</p:commandLink>
+										<p:spacer width="0" styleClass="link_nodecor"></p:spacer>
+									</ui:repeat>
+								</p:outputPanel>
+							</h:panelGroup>
+						</p:scrollPanel>
+					</p:outputPanel>
+				</h:form>
+				<!-- pericopatore arabo -->
+				<h:form id="arabicPericopesTextForm">
+					<p:outputPanel>
+						<p:scrollPanel mode="native" style="height:400px">
+							<h:panelGroup layout="block" style="text-align:right">
+								<p:outputPanel styleClass="arabic" id="arabicPanel">
+									<ui:repeat var="w" id="arabicLoop"
+										value="#{pericopeEditorController.arabicTokenViewList}">
+										<p:commandLink value="#{w.text}" id="cla"
+											title="Pericope #{w.pericopeInfo}:#{w.from}-#{w.to}"
+											partialSubmit="true" process="@this"
+											update="@this :arabicButtons"
+											actionListener="{pericopeEditorController.clickOnToken}"
+											styleClass="link_nodecor bk_#{pericopeEditorController.isArabicTokenViewToList(w)?'7':w.color eq -1?9:w.pericopeId eq pericopeEditorController.selectedArabicPericopeId?'arfocused':w.color%4} arabic">
+											<f:setPropertyActionListener
+												target="#{pericopeEditorController.arabicTokenViewToList}"
+												value="#{w}" />
+										</p:commandLink>
+
+										<p:spacer width="0" styleClass="link_nodecor"></p:spacer>
+									</ui:repeat>
+								</p:outputPanel>
+							</h:panelGroup>
+						</p:scrollPanel>
+					</p:outputPanel>
+				</h:form>
+
+				<h:panelGrid columns="3" id="greekButtons">
+					<p:commandButton id="greekAddClick" value="ADD"
+						styleClass="latinText" partialSubmit="true" process="@this"
+						actionListener="#{pericopeEditorController.addGreekClick}"
+						update=":greekPericopesTextForm:greekPanel :greekButtons"
+						disabled="#{pericopeEditorController.selectedGreekTokenView eq null}" />
+
+					<p:commandButton id="greekRemoveClick" value="REMOVE"
+						styleClass="latinText" partialSubmit="true" process="@this"
+						actionListener="#{pericopeEditorController.removeGreekClick}"
+						update=":greekPericopesTextForm:greekPanel :greekButtons"
+						disabled="#{pericopeEditorController.selectedGreekTokenView eq null}" />
+
+					<p:commandButton id="greekShiftClick" value="SHIFT"
+						styleClass="latinText" partialSubmit="true" process="@this"
+						actionListener="#{pericopeEditorController.shiftGreekClick}"
+						update=":greekPericopesTextForm:greekPanel :greekButtons"
+						disabled="true" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="3" id="arabicButtons">
+					<p:commandButton id="arabicAddClick" value="ADD"
+						styleClass="latinText" partialSubmit="true" process="@this"
+						actionListener="#{pericopeEditorController.addArabicClick}"
+						update=":arabicPericopesTextForm:arabicPanel arabicButtons"
+						disabled="#{pericopeEditorController.selectedArabicTokenView eq null}" />
+
+					<p:commandButton id="arabicRemoveClick" value="REMOVE"
+						styleClass="latinText" partialSubmit="true" process="@this"
+						actionListener="#{pericopeEditorController.removeArabicClick}"
+						update=":arabicPericopesTextForm:arabicPanel arabicButtons"
+						disabled="#{pericopeEditorController.selectedArabicTokenView eq null}" />
+
+					<p:commandButton id="arabicShiftClick" value="SHIFT"
+						styleClass="latinText" partialSubmit="true" process="@this"
+						actionListener="#{pericopeEditorController.shiftArabicClick}"
+						update=":arabicPericopesTextForm:arabicPanel arabicButtons" disabled="true" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+		</div>
+		<!--/h:form -->
+
+		<script>
+			$ = jQuery;
+			$(document).ready(function() {
+				document.getElementsByClassName('bk_grfocused')[0].focus();
+				document.getElementsByClassName('bk_arfocused')[0].focus();
+			});
+		</script>
+
+
+	</ui:composition>
+</body>
+</html>

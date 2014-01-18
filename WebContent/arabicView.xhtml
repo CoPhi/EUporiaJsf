@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Arabic View...</title>
+    </h:head>
+    <h:body>
+
+	<h:form prependId="false">
+
+		<p:dataTable id="dataTable" var="pericope" value="#{parallelViewBean.pericopesByArabic}"
+			paginator="true" rows="10"
+            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="10,20,50,500">
+			
+			<!-- 
+			<f:facet name="header">
+            	<h:commandLink action="greekView.xhtml" value="Order by Greek"></h:commandLink>
+        	</f:facet>
+ 			-->
+			<p:column>
+				<f:facet name="header">
+                	Greek ID
+           		</f:facet>
+
+				<h:outputText value="#{pericope.greekText.id}" />
+
+				<f:facet name="footer">
+                digit code
+            </f:facet>
+			</p:column>
+ 
+			<p:column headerText="Greek Pericope">
+				<h:outputText value="#{pericope.greekText.content}" />
+			</p:column>
+
+			<p:column headerText="Arabic Pericope" style="direction:rtl; text-align:right">
+				<h:outputText value="#{pericope.arabicText.content}" />
+			</p:column>
+
+			<p:column headerText="Arabic ID" footerText=" digit code">
+				<h:outputText value="#{pericope.arabicText.id}" />
+			</p:column>
+			
+			<f:facet name="footer">
+            <h:commandLink value="comment" action="comment.xhtml" /> <p:spacer></p:spacer> <h:commandLink value="view linguistic analysis" action="analysis.xhtml" />
+        </f:facet>
+
+		</p:dataTable>
+
+	</h:form>
+</h:body>
+</html>
